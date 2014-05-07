@@ -2,10 +2,9 @@
   (let ((lines nil) (file (open filename)))
     (loop for line = (read-line file nil)
 	  while line do
-	  (cond ;; There must be a better way
-	   ((null lines) (setf lines (list line)))
-	   ((null (cdr lines)) (setf (cdr lines) (list line)))
-	   (t (setf (cdr (last lines)) (list line)))))
+	  (if (null lines)
+	      (setf lines (list line))
+	    (setf (cdr (last lines)) (list line))))
     (close file)
     lines))
 
